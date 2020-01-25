@@ -1,0 +1,18 @@
+{% extends "django_blog/base.html" %}
+
+{% block content %}
+  {%for post in object_list %}
+    <article class="media content-section">
+      <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" alt="">
+      <div class="media-body">
+        <div class="article-metadata">
+          <a class="mr-2" href="{% url 'django_blog:user-posts' post.author.username %}">{{ post.author }}</a>
+          <small class="text-muted">{{ post.date_posted|date:"F d Y" }}</small>
+        </div>
+        <h2><a class="article-title" href="{% url 'django_blog:post-detail' post.id %}">{{ post.title }}</a></h2>
+        <p class="article-content">{{ post.content|slice:":200" }} ...</p>
+      </article>
+    {% empty %}
+      <p>There are no posts</p>
+    {% endfor %}
+{% endblock content %}
